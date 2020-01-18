@@ -16,5 +16,6 @@ get_ip(){
 }
 
 for int in `cat /tmp/46_int.log`;do
-    $int get_ip $int
+    myip=`get_ip $int`
+    echo "$int $myip"
 done > /tmp/46_int_ip.log
