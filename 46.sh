@@ -15,7 +15,15 @@ get_ip(){
     ip add |grep -w $1|grep 'inet'|awk -F '/' '{print $1}'|awk '{print $2}'
 }
 
+#把网卡和IP地址对应关系写入到临时文件中
 for int in `cat /tmp/46_int.log`;do
     myip=`get_ip $int`
-    echo "$int $myip"
+    myip_wc=`echo -e $myip |wc -l`
+    if [ $myip_wc -gt 1 ];then
+        for i in `echo $myip`;do
+            echo "$int $myip"
+        done
+    else
+	echo $int $myip
+    fi
 done > /tmp/46_int_ip.log
