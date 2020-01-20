@@ -27,3 +27,26 @@ for int in `cat /tmp/46_int.log`;do
 	echo $int $myip
     fi
 done > /tmp/46_int_ip.log
+
+if [ $# -ne 2 ];then
+    echo "Usage: sh $0 [ -i|I ] <interface|IP>"
+    exit
+fi
+
+if [ $1 == "-i" ];then
+    if `cat /tmp/46_int_ip.log |grep $2 >/dev/null 2>&1`;then
+        echo "网卡$2对应IP地址是`cat /tmp/46_int_ip.log |grep $2|awk '{print $2}'|xargs`"
+    else
+	echo "你指定的网卡不对，系统网卡有`cat /tmp/46_int.log|xargs`"
+	exit
+    fi
+elif [ $1 == "-I" ];then
+    if `cat /tmp/46_int_ip.log |grep $2 >/dev/null 2>&1`;then
+	echo "IP地址$2对应的网卡是`cat /tmp/46_int_ip.log|grep $2|awk '{print $1}'|sort|uniq`"
+    else
+	echo "你指定的IP地址不对，系统IP地址有`cat /tmp/46_int_ip.log|awk '{print $2}'|sort|uniq|xargs`"
+	exit
+    fi
+else
+    echo "Usage: sh $0 [ -i|I ] <interface|IP>"
+fi
