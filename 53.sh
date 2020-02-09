@@ -6,7 +6,7 @@
 #history:
 #2020/02/09    kun    V1.0
 
-iptables -nvL INPUT --line-numbers |grep -w 'dpt:22' |awk '$4 ~/DROP|REJECT/ {print $1}' > /tmp/53.log
+iptables -nvL INPUT --line-number |grep -w 'dpt:22' |awk '$4 ~/DROP|REJECT/ {print $1}' > /tmp/53.log
 
 n=`cat /tmp/53.log |wc -l`
 if [ $n -ne 0 ]
