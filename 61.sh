@@ -13,3 +13,4 @@ do
         echo $line
     fi
 done >> c.txt
+wc -l c.txt
